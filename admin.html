@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <h2>Admin Panel</h2>
+  <button onclick="loadStudents()">View All Students</button>
+
+  <div id="studentList"></div>
+
+  <script>
+    async function loadStudents() {
+      const response = await fetch('http://localhost:3000/api/students');
+      const data = await response.json();
+      let html = "<h3>Student Records:</h3><ul>";
+      data.forEach(s => {
+        html += `<li>${s.name} - ${s.transferEligible ? "✅ Eligible" : "❌ Not Eligible"}</li>`;
+      });
+      html += "</ul>";
+      document.getElementById("studentList").innerHTML = html;
+    }
+  </script>
+</body>
+</html>
